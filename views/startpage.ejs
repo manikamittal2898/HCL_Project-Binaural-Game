@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+
+    <title>Street Fighter</title>
+
+    <link rel="stylesheet" href="style.css">
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <style>
+        html, body { margin: 0; padding: 10; width: 100%; height: 100%; }
+        a { display: block; width: 100%; height: 100%; }
+    </style>
+  </head>
+
+  <body>
+    <!-- <embed src="Instructionsfinal.mp3" autostart="true" loop="true" hidden="true"> 
+    
+
+    </embed>  -->
+    <!-- <audio autoplay>
+      <source src="Instructionsfinal.mp3">
+</audio> -->
+<!-- <script>
+  document.getElementById('audio').play();
+  </script> -->
+  <!-- <audio id="audio" src="http://www.soundjay.com/button/beep-07.wav" autostart="false" ></audio> -->
+  <a onclick="PlaySound()"> Play</a>
+  <script>
+    var audio = new Audio('Instructions.wav');
+  function PlaySound() {
+    // window.location.href = "/second";
+        // var sound = document.getElementById("audio");
+        // sound.play()
+        
+ 
+audio.play();
+// window.location.href = "/second";
+    }
+    function endHandler() {
+    // alert('ended');
+    window.location.href = "/second";
+}
+
+// button.addEventListener('click', clickHandler, false);
+
+audio.addEventListener('ended', endHandler, false);
+  </script>
+    <!-- <a href="/second"></a> -->
+  </body>
+</html>
+
+
+<!-- <html>
+    <head>
+        <style>
+            html, body { margin: 0; padding: 0; width: 100%; height: 100%; }
+            a { display: block; width: 100%; height: 100%; }
+        </style>
+    </head>
+    <body>
+        <a href='index2.html'></a>
+    </body>
+</html> -->
+
+
+<!-- var audio = new Audio('audio_file.mp3');
+audio.play(); -->
