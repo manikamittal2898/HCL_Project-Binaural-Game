@@ -1,3 +1,7 @@
+
+
+const tfn = require("@tensorflow/tfjs-node");
+
 let xs = [];
 let ys = [];
 
@@ -12,6 +16,11 @@ let isDragStart = false;
 var resultPara = document.querySelector('.result');
 var phrase=localStorage.getItem("myPhrase");  
 var gestureoutput='';
+var score_value=document.querySelector('.score_val');
+var life_value=document.querySelector('.life_val');
+var score_local_val=0;
+var life_local_val=5;
+fin_score=document.querySelector('.final_score');
 function setup() {
     console.log(model);
 	// let canvas = createCanvas(480, 640);
@@ -33,7 +42,7 @@ function setup() {
     // loadButton.parent('load-button');
     // loadButton.addClass('btn btn-default');
 	// loadButton.mousePressed(loadTheModelAndWeights);
-	// loadTheModelAndWeights();
+	loadTheModelAndWeights();
 }
 
 function draw() {
@@ -70,10 +79,41 @@ function mouseReleased(e) {
 				outputP.html(makeOutputString(d));
 				phrase=localStorage.getItem("myPhrase"); 
 				if(gestureoutput === phrase) {
+					score_local_val=score_local_val+1;
+          //console.log(score)
+          score_value.textContent = score_local_val;
+          score_value.textContent = "Score-"+score_local_val;
 					resultPara.textContent = 'Gesture is correct!';
 					resultPara.style.background = 'lime';
 					stopaudio();
 					} else {
+						life_local_val=life_local_val-1;
+            //console.log(life)
+            life_value.textContent=life_local_val;
+            life_value.textContent="Lives-"+life_local_val;
+            if(life_local_val==0){
+              localStorage.setItem("myScore", score_local_val); 
+              stopaudio2();
+                            audio2.play();
+                            audio2.onended = function(){
+              //testSpeech();
+                       speaks=[{"name":"Alex", "lang":"en-US"}]
+                       const msg=new SpeechSynthesisUtterance();
+                       msg.volume=1; // 0 to 1
+                       msg.rate=1;   // 0.1 to 10
+                       msg.pitch=1; // 0 to 2
+                       msg.text="Your total score is"+score_local_val;
+                       const voice =speaks[0];
+                       console.log("voice dtected");
+                       msg.voiceURI=voice.name;
+                       msg.lang=voice.lang;
+                       speechSynthesis.speak(msg);
+                       window.location = 'game over.html';
+                   }
+
+              //fin_score.textContent=score_local_val
+  }
+  //till here
 						resultPara.textContent = 'Gesture is not correct';
 						resultPara.style.background = 'red';
 						stopaudio();
@@ -86,7 +126,7 @@ function mouseReleased(e) {
 async function loadTheModelAndWeights() {
 
 	// const tf = require("@tensorflow/tfjs");
-	const tfn = require("@tensorflow/tfjs-node");
+	// const tfn = require("@tensorflow/tfjs-node");
 	const handler = tfn.io.fileSystem("model.json");
 // 	const model = await tf.loadModel(handler);	
 

@@ -9,17 +9,23 @@ var phrases = [
   'back'
 
 ];
-
-var audio= [ new Audio("left.mp3"),
-new Audio("right.mp3"),
-new Audio("front.mp3"),
-new Audio("back.mp3")]
+var audio2=new Audio("game_over.mp3");
+var audio1=new Audio("Punch.mp3");
+var audio= [ new Audio("left_final.mp3"),
+new Audio("right_final.mp3"),
+new Audio("front_final.mp3"),
+new Audio("back_final.mp3")]
 var phrasePara = document.querySelector('.phrase');
 var resultPara = document.querySelector('.result');
 var diagnosticPara = document.querySelector('.output');
 var k; // variable for storing the random variable
 var testBtn = document.querySelector('.button_play');
-
+//new variables till line 26
+var score_value=document.querySelector('.score_val');
+var life_value=document.querySelector('.life_val');
+var score_local_val=0;
+var life_local_val=5;
+fin_score=document.querySelector('.final_score');
 function randomPhrase() {
   var number = Math.floor(Math.random() * phrases.length);
   return number;
@@ -29,6 +35,10 @@ function testSpeech() {
   testBtn.disabled = true;
   testBtn.textContent = 'Game in progress';
   k=randomPhrase();
+  if(k==2)
+  {
+    k=0;
+  }
   audio[k].play();
 //audio[k].addEventListener("ended", function(){
     // audio[k].currentTime = 0;
@@ -71,18 +81,58 @@ testSpeech();
     var speechResult = event.results[0][0].transcript.toLowerCase();
     diagnosticPara.textContent = 'Speech received: ' + speechResult + '.';
     if(speechResult === phrase) {
+      //new change
+      score_local_val=score_local_val+1;
+          //console.log(score)
+          score_value.textContent = score_local_val;
+          score_value.textContent = "Score-"+score_local_val;
       resultPara.textContent = 'I heard the correct phrase!';
       resultPara.style.background = 'lime';
    audio[k].pause();
   audio[k].currentTime =0;
- testSpeech();
+  audio1.play();
+  audio1.onended = function(){
+testSpeech();
+}
+
     } else {
+      //new change
+      life_local_val=life_local_val-1;
+            //console.log(life)
+            life_value.textContent=life_local_val;
+            life_value.textContent="Lives-"+life_local_val;
+            if(life_local_val==0){
+              localStorage.setItem("myScore", score_local_val); 
+              stopaudio2();
+                            audio2.play();
+                            audio2.onended = function(){
+              //testSpeech();
+                       speaks=[{"name":"Alex", "lang":"en-US"}]
+                       const msg=new SpeechSynthesisUtterance();
+                       msg.volume=1; // 0 to 1
+                       msg.rate=1;   // 0.1 to 10
+                       msg.pitch=1; // 0 to 2
+                       msg.text="Your total score is"+score_local_val;
+                       const voice =speaks[0];
+                       console.log("voice dtected");
+                       msg.voiceURI=voice.name;
+                       msg.lang=voice.lang;
+                       speechSynthesis.speak(msg);
+                       window.location.href= '/last';
+                   }
+              
+             
+  }
+  //till here
       resultPara.textContent = 'That didn\'t sound right.';
       resultPara.style.background = 'red';
     
      audio[k].pause();
   audio[k].currentTime =0;
- testSpeech();
+ audio1.play();
+  audio1.onended = function(){
+testSpeech();
+}
     }
 
     console.log('Confidence: ' + event.results[0][0].confidence);
@@ -140,9 +190,14 @@ testSpeech();
   }
 }
 function stopaudio() {
-	console.log("function enetred");
+	console.log("function entered");
 	audio[k].pause();
   audio[k].currentTime =0;
  testSpeech();
+}
+function stopaudio2() {
+    console.log("function entered");
+    audio[k].pause();
+  audio[k].currentTime =0;
 }
 testBtn.addEventListener('click', testSpeech);
