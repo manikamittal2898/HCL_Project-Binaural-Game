@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+  "engines": {
+    "node": "10.x"
+  },
   "dependencies": {
     "@tensorflow/tfjs-node": "^2.0.1",
     "body": "^5.1.0",
@@ -28,5 +31,3 @@
   },
   "homepage": "https://github.com/manikamittal2898/HCLProject#readme"
 }
-
-
