@@ -3,6 +3,7 @@
 const express= require("express");
 const bodyParser = require("body-parser");
 // const request = require("request");
+const PORT = process.env.PORT || 3000
 
 const app= express();
 app.set('view engine', 'ejs');
@@ -22,6 +23,6 @@ app.get("/last",function(req,res){
   // res.send("hello");
 });
 
-app.listen(3000, function(){
-  console.log("Listening on port 3000");
+app.listen(PORT, function(){
+  console.log("Listening on port ${PORT}");
 });
