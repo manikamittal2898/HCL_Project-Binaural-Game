@@ -135,9 +135,19 @@ function mouseReleased(e) {
 }
 
 async function loadTheModelAndWeights() {
+	//this is the part I want to change
     const uploadJSONInput = document.getElementById('upload-json');
     const uploadWeightsInput = document.getElementById('upload-weights');
     model = await tf.loadLayersModel(tf.io.browserFiles([uploadJSONInput.files[0], uploadWeightsInput.files[0]]));
+	//These are the things I have tried but not working
+	// 1) const model = await tf.loadLayersModel('file://home/manika/Desktop/PROJECT/public/model.json');
+	
+	// 2)const handler = tfn.io.fileSystem("./public/model.json");
+	//This required tfn but I do not know how and where to require it so getting a reference error. I can't even find where tf is initialzed
+	// const model = await tf.loadModel(handler);
+	
+	//3) const model = await tf.loadLayersModel('http://localhost:3000/model.json');
+	//empty model loaded which later becomes undefined
     isModelLoaded = true;
     console.log("model loaded");
 }
