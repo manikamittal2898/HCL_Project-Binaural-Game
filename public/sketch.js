@@ -165,17 +165,17 @@ function mouseReleased(e) {
 }
 
 async function loadTheModelAndWeights() {
-<<<<<<< HEAD
+
 	const uploadJSONInput = document.getElementById('upload-json');
 	const uploadWeightsInput = document.getElementById('upload-weights');
 	model = await tf.loadLayersModel(tf.io.browserFiles([uploadJSONInput.files[0], uploadWeightsInput.files[0]]));
-	isModelLoaded = true;
+	// isModelLoaded = true;
 	//console.log("model loaded");
-=======
+
 	//this is the part I want to change
-    const uploadJSONInput = document.getElementById('upload-json');
-    const uploadWeightsInput = document.getElementById('upload-weights');
-    model = await tf.loadLayersModel(tf.io.browserFiles([uploadJSONInput.files[0], uploadWeightsInput.files[0]]));
+    // const uploadJSONInput = document.getElementById('upload-json');
+    // const uploadWeightsInput = document.getElementById('upload-weights');
+    // model = await tf.loadLayersModel(tf.io.browserFiles([uploadJSONInput.files[0], uploadWeightsInput.files[0]]));
 	//These are the things I have tried but not working
 	// 1) const model = await tf.loadLayersModel('file://home/manika/Desktop/PROJECT/public/model.json');
 	
@@ -187,7 +187,7 @@ async function loadTheModelAndWeights() {
 	//empty model loaded which later becomes undefined
     isModelLoaded = true;
     console.log("model loaded");
->>>>>>> e654f2fe32ecd25f21f6680edeb569f578b5278b
+
 }
 
 
