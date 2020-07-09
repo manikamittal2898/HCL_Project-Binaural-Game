@@ -27,7 +27,7 @@ div p {
 
 div {
   overflow: auto;
-  position: absolute;
+  position: relative !important ;
   bottom: 0;
   right: 0;
   left: 0;

@@ -1,7 +1,6 @@
 var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
 var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
 var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
-
 var phrases = [
   'left',
   'right',
@@ -37,7 +36,6 @@ function randomPhrase() {
   var number = Math.floor(Math.random() * (phrases.length-2));
   return number;
 }
-
 function testSpeech() {
 	preload();
 	HideObjects();
@@ -68,9 +66,7 @@ function testSpeech() {
     // audio[k].currentTime = 0;
     // testSpeech();
 //});
-
 audio[k].onended = function(){
-  preload2();
 	life_local_val=life_local_val-1;
             //console.log(life)
 		//flag_life_speech=1;
@@ -85,16 +81,14 @@ audio[k].onended = function(){
 					   msg.volume=1; // 0 to 1
 					   msg.rate=0.9;   // 0.1 to 10
 					   msg.pitch=1; // 0 to 2
-            //  msg.text="hey how are you";
-            msg.text="Your total score is"+score_local_val+"Press anywhere to restart the game";
+					   msg.text="Your total score is"+score_local_val+"Press anywhere to restart the game";
 					   const voice =speaks[0];
 					   //console.log("voice dtected");
 					   msg.voiceURI=voice.name;
 					   msg.lang=voice.lang;
-             speechSynthesis.speak(msg);
-             window.location = '/last';
+					   speechSynthesis.speak(msg);
                    }
-        // window.location = '/last';
+        window.location = '/last';
         //window.location = 'game over.html';
         //fin_score.textContent=score_local_val
   }
@@ -129,7 +123,6 @@ testSpeech();
   resultPara.textContent = 'Waiting for response';
   resultPara.style.background = 'rgba(0,0,0,0.2)';
   diagnosticPara.textContent = '...diagnostic messages';
-
   var grammar = '#JSGF V1.0; grammar phrase; public <phrase> = ' + phrase +';';
   var recognition = new SpeechRecognition();
   var speechRecognitionList = new SpeechGrammarList();
@@ -138,9 +131,7 @@ testSpeech();
   recognition.lang = 'en-US';
   recognition.interimResults = false;
   recognition.maxAlternatives = 1;
-
   recognition.start();
-
   recognition.onresult = function(event) {
     // The SpeechRecognitionEvent results property returns a SpeechRecognitionResultList object
     // The SpeechRecognitionResultList object contains SpeechRecognitionResult objects.
@@ -159,7 +150,7 @@ testSpeech();
 	  flag_life_speech=1;
        console.log("I am equal"); 
 		preload1();
-		var ms=2000;//try
+		var ms=1000;
 	    var start = new Date().getTime();
 	    var end = start;
 	     while(end < start + ms) {
@@ -204,25 +195,22 @@ testSpeech();
                        speaks=[{"name":"Alex", "lang":"en-US"}]
 					   const msg=new SpeechSynthesisUtterance();
 					   msg.volume=1; // 0 to 1
-					   msg.rate=0.9;   // 0.1 to 10
+					   msg.rate=1;   // 0.1 to 10
 					   msg.pitch=1; // 0 to 2
 					   msg.text="Your total score is"+score_local_val+"Press anywhere to restart the game";
 					   const voice =speaks[0];
 					   //console.log("voice detected");
 					   msg.voiceURI=voice.name;
 					   msg.lang=voice.lang;
-             speechSynthesis.speak(msg);
-             window.location = '/last'
+					   speechSynthesis.speak(msg);
+             window.location = '/last';
                    }
-
  
-
-              // window.location = '/last';
+              // window.location = 'game over.html';
               //window.location = 'game over.html';
               //fin_score.textContent=score_local_val
   }
-  else{
-      resultPara.textContent = 'That is incorrect.';
+      resultPara.textContent = 'That\'s incorrect.';
       resultPara.style.background = 'blue';
     
     audio[k].pause();
@@ -232,16 +220,13 @@ testSpeech();
 testSpeech();
 }
     }
-  }
     //console.log('Confidence: ' + event.results[0][0].confidence);
   }
-
   recognition.onspeechend = function() {
     recognition.stop();
     testBtn.disabled = false;
     testBtn.textContent = 'Start new game';
   }
-
   recognition.onerror = function(event) {
     testBtn.disabled = false;
     testBtn.textContent = 'Start new game';
@@ -323,10 +308,10 @@ var elem14 = document.getElementById("animate14");
   var man = document.getElementById("centerPerson");
 var man2 = document.getElementById("diecenterPerson");  
   elem.style.display="block";
-  var pos = 300;
+  var pos = 290;
   var id = setInterval(frame, 12);
   function frame() {
-    if (pos == 720) {
+    if (pos == 760) {
       clearInterval(id);
 	  man.style.display="none";
 	  elem12.style.display="none";
@@ -380,10 +365,10 @@ function myMove2() {
   var man = document.getElementById("centerPerson");  
   var man2 = document.getElementById("diecenterPerson");
   elem.style.display="block";
-  var pos = 500;
-  var id = setInterval(frame, 11);
+  var pos = 400;
+  var id = setInterval(frame, 7);
   function frame() {
-    if (pos == 950) {
+    if (pos == 880) {
       clearInterval(id);
 	  man.style.display="none";
 	  elem12.style.display="none";
@@ -513,7 +498,6 @@ var man2 = document.getElementById("diecenterPerson");
     }
   }
 }
-
 function HideObjects() {
 	var x1 = document.getElementById("animate");
     var x12 = document.getElementById("animate12");	

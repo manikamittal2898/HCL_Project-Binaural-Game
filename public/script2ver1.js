@@ -7,10 +7,7 @@ var phrases = [
   'right',
   'front',
   'back'
-//   'she enjoys reading books and playing games',
-//   'where are you going',
-//   'have a great day',
-//   'she sells seashells on the seashore'
+  
 ];
 var audio1=new Audio("punch.mp3");
 var audio2=new Audio("game_over.mp3");
@@ -32,7 +29,6 @@ var flag_life_speech=0;
 var fin_score=document.querySelector('.final_score');
 var flag_wrong_answer=0;
 HideObjects();
-console.log("I am in script2");
 function randomPhrase() {
   var number = Math.floor(Math.random() * (phrases.length-2));
   return number;
@@ -44,9 +40,9 @@ function testSpeech() {
 	flag_life_speech=0; //changes
 	flag_wrong_answer=0;
   testBtn.disabled = true;
-  testBtn.textContent = 'Game in progress';
+  testBtn.textContent = 'Test in progress';
   k=randomPhrase();
-  //k=0;
+  k=0;
   audio[k].play();
   if(k==0){
 	  //console.log("k=0");
@@ -70,7 +66,6 @@ function testSpeech() {
 //});
 
 audio[k].onended = function(){
-  preload2();
 	life_local_val=life_local_val-1;
             //console.log(life)
 		//flag_life_speech=1;
@@ -83,18 +78,17 @@ audio[k].onended = function(){
                        speaks=[{"name":"Alex", "lang":"en-US"}]
 					   const msg=new SpeechSynthesisUtterance();
 					   msg.volume=1; // 0 to 1
-					   msg.rate=0.9;   // 0.1 to 10
+					   msg.rate=1;   // 0.1 to 10
 					   msg.pitch=1; // 0 to 2
-            //  msg.text="hey how are you";
-            msg.text="Your total score is"+score_local_val+"Press anywhere to restart the game";
+					   msg.text="hey how are you";
 					   const voice =speaks[0];
 					   //console.log("voice dtected");
 					   msg.voiceURI=voice.name;
 					   msg.lang=voice.lang;
              speechSynthesis.speak(msg);
-             window.location = '/last';
+             
                    }
-        // window.location = '/last';
+        window.location = '/last';
         //window.location = 'game over.html';
         //fin_score.textContent=score_local_val
   }
@@ -126,7 +120,7 @@ testSpeech();
   //amplify.store("myPhrase", phrase);
   localStorage.setItem("myPhrase", phrase); 
   phrasePara.textContent = phrase;
-  resultPara.textContent = 'Waiting for response';
+  resultPara.textContent = 'Right or wrong?';
   resultPara.style.background = 'rgba(0,0,0,0.2)';
   diagnosticPara.textContent = '...diagnostic messages';
 
@@ -150,21 +144,12 @@ testSpeech();
     // These also have getters so they can be accessed like arrays.
     // The second [0] returns the SpeechRecognitionAlternative at position 0.
     // We then return the transcript property of the SpeechRecognitionAlternative object 
-	console.log("hey I am in onresut");
     var speechResult = event.results[0][0].transcript.toLowerCase();
     diagnosticPara.textContent = 'Speech received: ' + speechResult + '.';
-	console.log(" I am inside onresult");
     if(speechResult === phrase) {
       score_local_val=score_local_val+1;
 	  flag_life_speech=1;
-       console.log("I am equal"); 
-		preload1();
-		var ms=2000;//try
-	    var start = new Date().getTime();
-	    var end = start;
-	     while(end < start + ms) {
-			 end = new Date().getTime();
-  }
+          //console.log(score)
 		  if(k==0)
 		  HideObjects2();
 	  else if(k==1)
@@ -173,6 +158,7 @@ testSpeech();
 		  HideObjects4();
 	  else if(k==3)
 		  HideObjects5();
+		  preload1();
           score_value.textContent = "Score-"+score_local_val;
 		  localStorage.setItem("myScore", score_local_val); 
       resultPara.textContent = 'I heard the correct phrase!';
@@ -181,10 +167,9 @@ testSpeech();
   audio[k].currentTime =0;
   audio1.play();
   audio1.onended = function(){
-	  console.log("Score is "+score_local_val);
 testSpeech();
 }
- //testSpeech();
+ testSpeech();
     } else {
 		HideObjects6();
 		flag_wrong_answer=1;
@@ -204,7 +189,7 @@ testSpeech();
                        speaks=[{"name":"Alex", "lang":"en-US"}]
 					   const msg=new SpeechSynthesisUtterance();
 					   msg.volume=1; // 0 to 1
-					   msg.rate=0.9;   // 0.1 to 10
+					   msg.rate=1;   // 0.1 to 10
 					   msg.pitch=1; // 0 to 2
 					   msg.text="Your total score is"+score_local_val+"Press anywhere to restart the game";
 					   const voice =speaks[0];
@@ -212,7 +197,7 @@ testSpeech();
 					   msg.voiceURI=voice.name;
 					   msg.lang=voice.lang;
              speechSynthesis.speak(msg);
-             window.location = '/last'
+             window.location = '/last';
                    }
 
  
@@ -221,9 +206,8 @@ testSpeech();
               //window.location = 'game over.html';
               //fin_score.textContent=score_local_val
   }
-  else{
-      resultPara.textContent = 'That is incorrect.';
-      resultPara.style.background = 'blue';
+      resultPara.textContent = 'That didn\'t sound right.';
+      resultPara.style.background = 'red';
     
     audio[k].pause();
   audio[k].currentTime =0;
@@ -232,19 +216,19 @@ testSpeech();
 testSpeech();
 }
     }
-  }
+
     //console.log('Confidence: ' + event.results[0][0].confidence);
   }
 
   recognition.onspeechend = function() {
     recognition.stop();
     testBtn.disabled = false;
-    testBtn.textContent = 'Start new game';
+    testBtn.textContent = 'Start new test';
   }
 
   recognition.onerror = function(event) {
     testBtn.disabled = false;
-    testBtn.textContent = 'Start new game';
+    testBtn.textContent = 'Start new test';
     diagnosticPara.textContent = 'Error occurred in recognition: ' + event.error;
   }
   
@@ -323,10 +307,10 @@ var elem14 = document.getElementById("animate14");
   var man = document.getElementById("centerPerson");
 var man2 = document.getElementById("diecenterPerson");  
   elem.style.display="block";
-  var pos = 300;
+  var pos = 0;
   var id = setInterval(frame, 12);
   function frame() {
-    if (pos == 720) {
+    if (pos == 560) {
       clearInterval(id);
 	  man.style.display="none";
 	  elem12.style.display="none";
@@ -340,15 +324,15 @@ var man2 = document.getElementById("diecenterPerson");
 	}
 	else if(elem.style.display=="none"&&elem12.style.display=="none"){
 		clearInterval(id);
-		/*elem14.style.left=pos+"px";
-		 elem14.style.display="block";
-		 var ms=500;
-	     var start = new Date().getTime();
-	     var end = start;
-	     while(end < start + ms) {
-	     end = new Date().getTime();
-  }
-        elem14.style.display="none";*/
+	// 	elem14.style.left=pos+"px";
+	// 	 elem14.style.display="block";
+	// 	 var ms=500;
+	//      var start = new Date().getTime();
+	//      var end = start;
+	//      while(end < start + ms) {
+	//      end = new Date().getTime();
+  // }
+  //       elem14.style.display="none";
 		 elem13.style.left=pos+"px";
 		 elem13.style.display="block";
 	}
@@ -380,10 +364,10 @@ function myMove2() {
   var man = document.getElementById("centerPerson");  
   var man2 = document.getElementById("diecenterPerson");
   elem.style.display="block";
-  var pos = 500;
-  var id = setInterval(frame, 11);
+  var pos = 0;
+  var id = setInterval(frame, 7);
   function frame() {
-    if (pos == 950) {
+    if (pos == 700) {
       clearInterval(id);
 	  man.style.display="none";
 	  elem12.style.display="none";

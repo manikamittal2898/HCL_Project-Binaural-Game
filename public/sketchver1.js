@@ -27,7 +27,7 @@ function preload() {
  
 }
 function preload1() {
-	console.log("I am inside preload1");
+	console.log("I am inside preload");
  img = loadImage('canvas2.png'); // load media and other data
  
 }
@@ -97,6 +97,7 @@ function mouseReleased(e) {
 				phrase=localStorage.getItem("myPhrase"); 
 				if(gestureoutput === phrase) {
 					preload1();
+
 					//setup();
 					flag_life=1; // changes
 					localStorage.setItem("myFlag", flag_life); //changes
@@ -135,7 +136,7 @@ function mouseReleased(e) {
               //testSpeech();
                        speaks=[{"name":"Alex", "lang":"en-US"}]
 					   const msg=new SpeechSynthesisUtterance();
-					   msg.volume=1; // 0 to 1
+					   msg.volume=0.9; // 0 to 1
 					   msg.rate=1;   // 0.1 to 10
 					   msg.pitch=1; // 0 to 2
 					   msg.text="Your total score is"+score_local_val+"Press anywhere to restart the game";
@@ -154,8 +155,8 @@ function mouseReleased(e) {
 							//fin_score.textContent=score_local_val
 	} 
 	else{
-						resultPara.textContent = 'Gesture is incorrect';
-						resultPara.style.background = 'blue';
+						resultPara.textContent = 'Gesture is not correct';
+						resultPara.style.background = 'red';
 	fail();}
 						
 						}
